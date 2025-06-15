@@ -14,7 +14,7 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL,
 )
 import homeassistant.helpers.config_validation as cv
-from homeassistant.helpers.typing import HomeAssistantType
+from homeassistant.core import HomeAssistant
 
 from . import config_flow  # noqa: F401
 from .const import CONTROLLERS, DOMAIN
@@ -54,7 +54,7 @@ async def async_setup(hass, config):
     return True
 
 
-async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry):
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Pass conf to all the components."""
 
     controllers = {}
