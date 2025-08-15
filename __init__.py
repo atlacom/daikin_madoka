@@ -3,7 +3,7 @@ import asyncio
 from datetime import timedelta
 import logging
 
-from pymadoka import Controller, discover_devices, force_device_disconnect
+from .pymadoka_patch import Controller, discover_devices, force_device_disconnect
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry
