@@ -5,23 +5,36 @@ from .pymadoka_patch import Controller
 from .pymadoka_patch.connection import ConnectionException, ConnectionStatus
 
 # Temporary stubs for missing classes - these would need full implementation for complete functionality
-class FanSpeedEnum:
-    pass
+from enum import Enum
+
+class FanSpeedEnum(Enum):
+    LOW = "LOW"
+    MID = "MID"
+    HIGH = "HIGH"
+    AUTO = "AUTO"
 
 class FanSpeedStatus:
-    pass
+    def __init__(self):
+        self.value = FanSpeedEnum.AUTO
 
-class OperationModeEnum:
-    pass
+class OperationModeEnum(Enum):
+    FAN = "FAN"
+    DRY = "DRY"
+    COOL = "COOL"
+    HEAT = "HEAT"
+    AUTO = "AUTO"
 
 class OperationModeStatus:
-    pass
+    def __init__(self):
+        self.value = OperationModeEnum.AUTO
 
 class PowerStateStatus:
-    pass
+    def __init__(self):
+        self.value = False
 
 class SetPointStatus:
-    pass
+    def __init__(self):
+        self.value = 22.0
 
 from homeassistant.components.climate import ClimateEntity, HVACMode, HVACAction, ClimateEntityFeature
 from homeassistant.components.climate.const import (
