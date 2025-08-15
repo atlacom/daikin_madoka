@@ -11,8 +11,8 @@ from enum import Enum
 from bleak import BleakClient, BleakScanner
 from typing import Dict
 
-from pymadoka.transport import Transport, TransportDelegate
-from pymadoka.consts import NOTIFY_CHAR_UUID, WRITE_CHAR_UUID, SEND_MAX_TRIES
+from .transport import Transport, TransportDelegate
+from .consts import NOTIFY_CHAR_UUID, WRITE_CHAR_UUID, SEND_MAX_TRIES
 
 logger = logging.getLogger(__name__)
 
