@@ -32,12 +32,14 @@ class MockStatus:
                 MID = "MID"
                 HIGH = "HIGH"
             self.fan_speed = FanSpeedEnum.AUTO
+            self.heating_fan_speed = FanSpeedEnum.AUTO
+            self.cooling_fan_speed = FanSpeedEnum.AUTO
         elif feature_name == "set_point":
-            self.set_point_cool = 24.0
-            self.set_point_heat = 20.0
+            self.heating_set_point = 20.0
+            self.cooling_set_point = 24.0
         elif feature_name == "temperatures":
-            self.indoor_temperature = 22.0
-            self.outdoor_temperature = 15.0
+            self.indoor = 22.0
+            self.outdoor = 15.0
 
 
 class MockFeature:
