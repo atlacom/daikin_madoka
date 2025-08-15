@@ -2,7 +2,7 @@
 
 import re
 
-from pymadoka import discover_devices, force_device_disconnect
+from .pymadoka_patch import discover_devices, force_device_disconnect
 import voluptuous as vol
 
 from homeassistant import config_entries

@@ -17,8 +17,8 @@ from .const import (
     CONTROLLERS,
 )
 
-from pymadoka import Controller
-from pymadoka.feature import ConnectionException, ConnectionStatus
+from .pymadoka_patch import Controller
+from .pymadoka_patch.connection import ConnectionException, ConnectionStatus
 
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):

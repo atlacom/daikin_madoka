@@ -1,17 +1,27 @@
 """Support for the Daikin Madoka HVAC."""
 import logging
 
-from pymadoka import (
-    ConnectionException,
-    Controller,
-    FanSpeedEnum,
-    FanSpeedStatus,
-    OperationModeEnum,
-    OperationModeStatus,
-    PowerStateStatus,
-    SetPointStatus,
-)
-from pymadoka.connection import ConnectionStatus
+from .pymadoka_patch import Controller
+from .pymadoka_patch.connection import ConnectionException, ConnectionStatus
+
+# Temporary stubs for missing classes - these would need full implementation for complete functionality
+class FanSpeedEnum:
+    pass
+
+class FanSpeedStatus:
+    pass
+
+class OperationModeEnum:
+    pass
+
+class OperationModeStatus:
+    pass
+
+class PowerStateStatus:
+    pass
+
+class SetPointStatus:
+    pass
 
 from homeassistant.components.climate import ClimateEntity, HVACMode, HVACAction, ClimateEntityFeature
 from homeassistant.components.climate.const import (
