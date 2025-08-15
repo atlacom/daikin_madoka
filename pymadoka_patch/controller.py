@@ -8,6 +8,58 @@ from .connection import Connection, ConnectionException, ConnectionStatus
 logger = logging.getLogger(__name__)
 
 
+class MockStatus:
+    """Mock status object for features."""
+    def __init__(self, feature_name: str):
+        self.feature_name = feature_name
+        # Set default values based on feature type
+        if feature_name == "power_state":
+            self.turn_on = True
+        elif feature_name == "operation_mode":
+            from enum import Enum
+            class OperationModeEnum(Enum):
+                AUTO = "AUTO"
+                COOL = "COOL"
+                HEAT = "HEAT"
+                FAN = "FAN"
+                DRY = "DRY"
+            self.operation_mode = OperationModeEnum.AUTO
+        elif feature_name == "fan_speed":
+            from enum import Enum
+            class FanSpeedEnum(Enum):
+                AUTO = "AUTO"
+                LOW = "LOW"
+                MID = "MID"
+                HIGH = "HIGH"
+            self.fan_speed = FanSpeedEnum.AUTO
+        elif feature_name == "set_point":
+            self.set_point_cool = 24.0
+            self.set_point_heat = 20.0
+        elif feature_name == "temperatures":
+            self.indoor_temperature = 22.0
+            self.outdoor_temperature = 15.0
+
+
+class MockFeature:
+    """Mock feature class that simulates pymadoka features."""
+    def __init__(self, feature_name: str):
+        self.feature_name = feature_name
+        self.status = MockStatus(feature_name)
+    
+    async def query(self):
+        """Mock query method - in real implementation this would query the device."""
+        logger.debug(f"Mock query for {self.feature_name}")
+        return self.status
+    
+    async def update(self, **kwargs):
+        """Mock update method - in real implementation this would update the device."""
+        logger.debug(f"Mock update for {self.feature_name} with {kwargs}")
+        # Update status based on provided values
+        for key, value in kwargs.items():
+            if hasattr(self.status, key):
+                setattr(self.status, key, value)
+
+
 class Controller:
     """Simplified controller for Daikin Madoka devices.
     
@@ -31,6 +83,15 @@ class Controller:
         self.status = {}
         self.info = {}
         self.connection = Connection(address, adapter=adapter, reconnect=reconnect)
+        
+        # Initialize feature attributes expected by the climate integration
+        self.power_state = MockFeature("power_state")
+        self.operation_mode = MockFeature("operation_mode") 
+        self.fan_speed = MockFeature("fan_speed")
+        self.set_point = MockFeature("set_point")
+        self.temperatures = MockFeature("temperatures")
+        self.clean_filter_indicator = MockFeature("clean_filter_indicator")
+        self.reset_clean_filter_timer = MockFeature("reset_clean_filter_timer")
 
     async def start(self):
         """Start the connection to the device."""        
